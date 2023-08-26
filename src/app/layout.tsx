@@ -3,7 +3,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import CustomProvider from '@/components/redux/CustomProvider';
-import Layout from '@/styles/styledComponents/layout';
+import LayoutContainer from '@/styles/styledComponents/layout';
+import NavBar from '@/components/shared/navBar/NavBar';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,7 +16,10 @@ export default function RootLayout({ children }: PureFunctionProp) {
     <html lang="en">
       <body>
         <CustomProvider>
-          <Layout>{children}</Layout>
+          <LayoutContainer>
+            <NavBar />
+            {children}
+          </LayoutContainer>
         </CustomProvider>
       </body>
     </html>
