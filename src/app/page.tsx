@@ -1,17 +1,21 @@
 'use client';
-import useAppDispatch from '@/hooks/useAppDispatch';
-import useAppSelector from '@/hooks/useAppSelector';
-import { increment } from '@/store/features/counterSlice';
+
+import { useGetLeaderBoardQuery } from '@/store/services/valorantApi';
 import Header from '@/styles/styledComponents/header';
+import { Metadata } from 'next';
+
+export const metaData: Metadata = {
+  title: 'Valorant ranking',
+  description: 'List of best players',
+};
 
 export default function Home() {
-  const count = useAppSelector((state) => state.counterReducer.value);
-  const dispatch = useAppDispatch();
+  const { data } = useGetLeaderBoardQuery(null);
+  console.log(data);
 
   return (
     <>
-      <Header>{count}</Header>
-      <button onClick={() => dispatch(increment())}>ADD</button>
+      <Header>HOLAAA</Header>
     </>
   );
 }
