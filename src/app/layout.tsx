@@ -3,8 +3,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import CustomProvider from '@/components/redux/CustomProvider';
-import LayoutContainer from '@/styles/styledComponents/layout';
 import NavBar from '@/components/shared/navBar/NavBar';
+import { LayoutContainer } from '@/components/containers/layoutContainer';
+import ScrollButton from '@/components/shared/scrollButton/';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: PureFunctionProp) {
         <CustomProvider>
           <LayoutContainer>
             <NavBar />
+            <ScrollButton />
             {children}
           </LayoutContainer>
         </CustomProvider>
