@@ -7,6 +7,9 @@ import { Metadata } from 'next';
 import useAppDispatch from '@/hooks/useAppDispatch';
 import { addPlayers, reset, setLoading } from '@/store/features/auxValorant';
 import useAppSelector from '@/hooks/useAppSelector';
+import LeaderBoard from '@/components/leaderboard/LeaderBoard';
+import ValorantLogo from '../../public/logos/valorant-logo.svg';
+import * as St from '@/components/shared/title/leaderBoardTitle';
 
 export const metaData: Metadata = {
   title: 'Valorant ranking',
@@ -15,6 +18,7 @@ export const metaData: Metadata = {
 
 export default function Home() {
   const { data, isLoading, isFetching } = useGetLeaderBoardQuery(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const players = useAppSelector(
     (state) => state.valorantPlayersReducer.players
@@ -48,24 +52,22 @@ export default function Home() {
   }, [isLoading, internalLoading, handleScroll]);
 
   useEffect(() => {
-    if (data && !isFetching) {
-      dispatch(setLoading(true));
+    dispatch(setLoading(true));
+    if (data && !isFetching && !isLoading) {
       dispatch(reset());
       dispatch(addPlayers(data?.slice(0, 1000)));
       dispatch(setLoading(false));
     }
-  }, [data, dispatch, isFetching]);
+  }, [data, dispatch, isFetching, isLoading]);
 
   return (
     <Wrapper>
-      <ul>
-        {!isLoading &&
-          !isFetching &&
-          players.map((player) => (
-            <li key={player.leaderboardRank}>{player.tagLine}</li>
-          ))}
-      </ul>
-      {(isLoading || internalLoading) && <p>Loading...</p>}
+      <St.LeaderBoardTitleContainer>
+        <ValorantLogo fill="#ff4655" width="200" height="200" />
+        <St.Title>alorant</St.Title>
+      </St.LeaderBoardTitleContainer>
+      <St.Subtitle>Leaderboards</St.Subtitle>
+      <LeaderBoard data={players} loading={isLoading || internalLoading} />
     </Wrapper>
   );
 }

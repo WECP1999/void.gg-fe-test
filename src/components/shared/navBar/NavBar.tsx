@@ -6,7 +6,9 @@ export default function NavBar() {
   return (
     <S.Nav>
       <S.HomeIcon>
-        <VoidIcon />
+        <Link href="/">
+          <VoidIcon />
+        </Link>
       </S.HomeIcon>
       <S.LinkContainer>
         <S.LinkList>
