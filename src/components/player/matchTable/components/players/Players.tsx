@@ -1,8 +1,9 @@
 import Chip from '@/components/shared/chip/Chip';
-import * as S from '@/components/shared/table/style';
 import { IPlayersInfo } from '@/interfaces/IMatch';
 import Image from 'next/image';
 import { MatchStateOverlay, PlayersSection } from '../style';
+import { useRouter } from 'next/navigation';
+import * as S from '@/components/shared/table/style';
 
 type PlayersProps = {
   players: {
@@ -15,6 +16,10 @@ type PlayersProps = {
 export default function Players({
   players: { all_players, blue, red },
 }: PlayersProps) {
+  const router = useRouter();
+  const handleRouteChange = (player: IPlayersInfo) => {
+    router.push(encodeURI(`/eu/${player.name}/${player.tag}`));
+  };
   return (
     <>
       {blue.length > 0 && red.length > 0 && (
@@ -34,7 +39,10 @@ export default function Players({
             </S.THead>
             <S.TBody className="players">
               {blue.map((player) => (
-                <tr key={player.puuid}>
+                <tr
+                  key={player.puuid}
+                  onClick={() => handleRouteChange(player)}
+                >
                   <td className="w-[50%]">
                     <PlayersSection className="justify-start ">
                       <Image
@@ -79,7 +87,10 @@ export default function Players({
             </S.THead>
             <S.TBody className="players">
               {red.map((player) => (
-                <tr key={player.puuid}>
+                <tr
+                  key={player.puuid}
+                  onClick={() => handleRouteChange(player)}
+                >
                   <td className="w-[50%]">
                     <PlayersSection className="justify-start ">
                       <Image
@@ -121,7 +132,7 @@ export default function Players({
           </S.THead>
           <S.TBody className="players">
             {all_players.map((player) => (
-              <tr key={player.puuid}>
+              <tr key={player.puuid} onClick={() => handleRouteChange(player)}>
                 <td className="w-[50%]">
                   <PlayersSection className="justify-start ">
                     <Image
