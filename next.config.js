@@ -14,4 +14,7 @@ module.exports = withTwin({
 
     return config;
   },
+  images: {
+    domains: ['media.valorant-api.com'],
+  },
 });

@@ -1,8 +1,8 @@
-import { SkeletonRow } from './style';
+import { SkeletonRow } from '../../../shared/table/style';
 
 export default function Skeleton() {
   return (
-    <tr>
+    <tr className="skeleton">
       <td>
         <SkeletonRow className="m-auto" width="2.5em" />
       </td>

@@ -22,6 +22,25 @@ export const THead = styled.thead`
       }
     }
   }
+
+  &.players {
+    th:nth-child(1) {
+      ${tw`text-left w-12`}
+      &.team-title {
+        ${tw`relative text-[0.8rem] font-bold opacity-[1]`}
+        &.blue {
+          ${tw`text-[rgb(27, 155, 197)]`}
+        }
+        &.red {
+          ${tw`text-[rgb(255, 70, 85)]`}
+        }
+        text-align: center;
+      }
+    }
+    th:nth-child(2) {
+      ${tw`w-auto text-right`}
+    }
+  }
 `;
 
 export const TBody = styled.tbody`
@@ -40,6 +59,15 @@ export const TBody = styled.tbody`
 
     &:hover {
       background-size: 100%;
+    }
+
+    &.skeleton {
+      &:hover {
+        background-size: 0;
+      }
+      td {
+        ${tw`cursor-default`}
+      }
     }
 
     &.anonymized {
@@ -83,11 +111,18 @@ export const TBody = styled.tbody`
       }
     }
   }
+
+  &.players > tr {
+    td {
+      ${tw`opacity-100`}
+    }
+  }
 `;
 
-export const Chip = tw.span`rounded-3xl w-fit px-2 py-1 opacity-50 border-white border-[1px] text-[0.75rem] leading-3`;
-
-type SkeletonRowProps = { width: `${number}${'px' | 'em'}` };
+type SkeletonRowProps = {
+  width: `${number}${'px' | 'em' | '%'}`;
+  height?: `${number}${'px' | 'em' | '%'}`;
+};
 
 const pulseAnimation = keyframes`
   from{
@@ -99,7 +134,8 @@ const pulseAnimation = keyframes`
 `;
 
 export const SkeletonRow = styled.div<SkeletonRowProps>`
-  ${tw`bg-[rgb(46, 46, 49)] h-4 rounded`}
+  ${tw`bg-[rgb(46, 46, 49)] rounded cursor-default `}
   width: ${(props) => props.width};
+  height: ${(props) => props.height ?? '1rem'};
   animation: ${pulseAnimation} 0.5s infinite alternate;
 `;

@@ -1,9 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import * as S from './components/style';
+import * as S from '../shared/table/style';
 import IPlayer from '@/interfaces/IPlayer';
-import Skeleton from './components/Skeleton';
+import Skeleton from './components/skeleton';
+import Chip from '../shared/chip/';
 
 type LeaderBoardProps = {
   data: IPlayer[];
@@ -41,10 +42,10 @@ export default function LeaderBoard({ data, loading }: LeaderBoardProps) {
               </td>
               <td>
                 {player.IsAnonymized ? 'Anonymized' : player.gameName}{' '}
-                <S.Chip>
+                <Chip>
                   <span>#</span>
                   {player.IsAnonymized ? 'Anonymized' : player.tagLine}
-                </S.Chip>
+                </Chip>
               </td>
               <td>{player.rankedRating}</td>
               <td>{player.numberOfWins}</td>

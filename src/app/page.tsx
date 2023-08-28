@@ -9,7 +9,7 @@ import { addPlayers, reset, setLoading } from '@/store/features/auxValorant';
 import useAppSelector from '@/hooks/useAppSelector';
 import LeaderBoard from '@/components/leaderboard/LeaderBoard';
 import ValorantLogo from '../../public/logos/valorant-logo.svg';
-import * as St from '@/components/shared/title/leaderBoardTitle';
+import * as St from '@/components/shared/title/title';
 
 export const metaData: Metadata = {
   title: 'Valorant ranking',
@@ -62,10 +62,10 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <St.LeaderBoardTitleContainer>
+      <St.TitleContainer>
         <ValorantLogo fill="#ff4655" width="200" height="200" />
         <St.Title>alorant</St.Title>
-      </St.LeaderBoardTitleContainer>
+      </St.TitleContainer>
       <St.Subtitle>Leaderboards</St.Subtitle>
       <LeaderBoard data={players} loading={isLoading || internalLoading} />
     </Wrapper>
