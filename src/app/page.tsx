@@ -64,7 +64,7 @@ export default function Home() {
     <Wrapper>
       <St.TitleContainer>
         <ValorantLogo fill="#ff4655" width="200" height="200" />
-        <St.Title>alorant</St.Title>
+        <St.Title className="pb-8 ml-[-1rem]">alorant</St.Title>
       </St.TitleContainer>
       <St.Subtitle>Leaderboards</St.Subtitle>
       <LeaderBoard data={players} loading={isLoading || internalLoading} />

@@ -15,6 +15,10 @@ module.exports = withTwin({
     return config;
   },
   images: {
-    domains: ['media.valorant-api.com'],
+    domains: [
+      'media.valorant-api.com',
+      'cloudflare-ipfs.com',
+      'loremflickr.com',
+    ],
   },
 });

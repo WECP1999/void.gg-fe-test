@@ -12,7 +12,7 @@ type GetPlayerProps = {
 const valorantApi = createApi({
   reducerPath: 'valorantApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_BASE_ENDPOINT,
+    baseUrl: process.env.NEXT_PUBLIC_BASE_VALORANT_ENDPOINT,
   }),
   endpoints: (builder) => ({
     getLeaderBoard: builder.query<IPlayer[], null>({

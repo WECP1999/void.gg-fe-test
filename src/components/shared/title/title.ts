@@ -12,8 +12,6 @@ export const TitleContainer = styled.div`
 export const Title = tw.h1`
     text-5xl
     font-bold
-    pb-8
-    ml-[-1rem]
     tracking-wide
 `;
 
