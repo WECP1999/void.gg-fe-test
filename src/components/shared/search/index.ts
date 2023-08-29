@@ -1,1 +1,1 @@
-export { default } from './Searh';
+export { default } from './Search';
