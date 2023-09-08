@@ -1,17 +1,73 @@
 'use client';
+
+import { useCallback, useEffect, useState } from 'react';
+import { Wrapper } from '@/components/containers/layoutContainer';
+import { useGetLeaderBoardQuery } from '@/store/services/valorantApi';
+import { Metadata } from 'next';
 import useAppDispatch from '@/hooks/useAppDispatch';
+import { addPlayers, reset, setLoading } from '@/store/features/auxValorant';
 import useAppSelector from '@/hooks/useAppSelector';
-import { increment } from '@/store/features/counterSlice';
-import Header from '@/styles/styledComponents/header';
+import LeaderBoard from '@/components/leaderboard/LeaderBoard';
+import ValorantLogo from '../../public/logos/valorant-logo.svg';
+import * as St from '@/components/shared/title/title';
+
+export const metaData: Metadata = {
+  title: 'Valorant ranking',
+  description: 'List of best players',
+};
 
 export default function Home() {
-  const count = useAppSelector((state) => state.counterReducer.value);
+  const { data, isLoading, isFetching } = useGetLeaderBoardQuery(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const players = useAppSelector(
+    (state) => state.valorantPlayersReducer.players
+  );
+  const internalLoading = useAppSelector(
+    (state) => state.valorantPlayersReducer.loading
+  );
   const dispatch = useAppDispatch();
 
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+        document.documentElement.offsetHeight ||
+      isLoading ||
+      isFetching ||
+      !data
+    ) {
+      return;
+    }
+    dispatch(setLoading(true));
+    dispatch(
+      addPlayers(data?.slice(currentPage * 1000, (currentPage + 1) * 1000))
+    );
+    dispatch(setLoading(false));
+    setCurrentPage((prev) => prev + 1);
+  }, [currentPage, data, isLoading, isFetching, dispatch]);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLoading, internalLoading, handleScroll]);
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+    if (data && !isFetching && !isLoading) {
+      dispatch(reset());
+      dispatch(addPlayers(data?.slice(0, 1000)));
+      dispatch(setLoading(false));
+    }
+  }, [data, dispatch, isFetching, isLoading]);
+
   return (
-    <>
-      <Header>{count}</Header>
-      <button onClick={() => dispatch(increment())}>ADD</button>
-    </>
+    <Wrapper>
+      <St.TitleContainer>
+        <ValorantLogo fill="#ff4655" width="200" height="200" />
+        <St.Title className="pb-8 ml-[-1rem]">alorant</St.Title>
+      </St.TitleContainer>
+      <St.Subtitle>Leaderboards</St.Subtitle>
+      <LeaderBoard data={players} loading={isLoading || internalLoading} />
+    </Wrapper>
   );
 }

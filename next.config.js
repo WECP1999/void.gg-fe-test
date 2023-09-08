@@ -1,4 +1,24 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+const withTwin = require('./withTwin.js');
 
-module.exports = nextConfig;
+/**
+ * @type {import('next').NextConfig}
+ */
+module.exports = withTwin({
+  reactStrictMode: true,
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
+  },
+  images: {
+    domains: [
+      'media.valorant-api.com',
+      'cloudflare-ipfs.com',
+      'loremflickr.com',
+    ],
+  },
+});
